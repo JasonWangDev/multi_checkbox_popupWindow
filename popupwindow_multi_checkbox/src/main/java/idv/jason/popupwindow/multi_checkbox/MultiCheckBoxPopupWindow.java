@@ -21,8 +21,6 @@ public class MultiCheckBoxPopupWindow extends PopupWindow {
 
     private static final int LAYOUT_ID = R.layout.popupwindow_multi_checkbox;
 
-    private static final int BACKGROUND_COLOR = android.R.color.darker_gray;
-
     private static final int WIDTH = ViewGroup.LayoutParams.MATCH_PARENT;
     private static final int HEIGHT = ViewGroup.LayoutParams.MATCH_PARENT;
 
@@ -30,7 +28,7 @@ public class MultiCheckBoxPopupWindow extends PopupWindow {
     private RecyclerView recyclerView;
 
 
-    public MultiCheckBoxPopupWindow(Context context, MultiCheckBoxAdapter adapter) {
+    public MultiCheckBoxPopupWindow(Context context, MultiCheckBoxAdapter adapter, int backgroundColor, RecyclerView.ItemDecoration divider) {
         super(context);
 
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -43,11 +41,14 @@ public class MultiCheckBoxPopupWindow extends PopupWindow {
         GridLayoutManager layoutManager = new GridLayoutManager(context, COL_COUNT);
         recyclerView.setLayoutManager(layoutManager);
 
+        if (null != divider)
+            recyclerView.addItemDecoration(divider);
+
         recyclerView.setAdapter(adapter);
 
         setContentView(popupWindowView);
 
-        setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(context, BACKGROUND_COLOR)));
+        setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(context, backgroundColor)));
 
         setWidth(WIDTH);
         setHeight(HEIGHT);

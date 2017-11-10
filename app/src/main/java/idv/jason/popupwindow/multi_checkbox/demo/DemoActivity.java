@@ -43,7 +43,7 @@ public class DemoActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         if (null == popupWindow)
         {
-            popupWindow = new MultiCheckBoxPopupWindow(this, adapter);
+            popupWindow = new MultiCheckBoxPopupWindow(this, adapter, android.R.color.holo_green_dark, null);
             popupWindow.setOnDismissListener(this);
         }
 
@@ -97,7 +97,7 @@ public class DemoActivity extends AppCompatActivity implements View.OnClickListe
 
     private List<User> getData() {
         List<User> userList = new ArrayList<>();
-        for (int i = 0 ; i < 10 ; i++)
+        for (int i = 0 ; i < 5 ; i++)
             userList.add(new User("Name " + i));
         userList.add(0, new User("全選"));
 
