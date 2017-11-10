@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,7 +32,7 @@ public abstract class MultiCheckBoxAdapter<T> extends RecyclerView.Adapter<Multi
 
     private boolean onBind;
 
-    private boolean isSupportAllSelect = true;
+    private boolean isSupportAllSelect;
     private boolean isAllRowSingle;
     private List<T> objectList;
     private List<T> checkedList;
@@ -39,10 +40,11 @@ public abstract class MultiCheckBoxAdapter<T> extends RecyclerView.Adapter<Multi
 
     //****************************************** 建構子 ******************************************//
 
-    public MultiCheckBoxAdapter(boolean isAllRowSingle, List<T> objectList, List<T> checkedList) {
+    public MultiCheckBoxAdapter(boolean isAllRowSingle, List<T> objectList) {
+        this.isSupportAllSelect = true;
         this.isAllRowSingle = isAllRowSingle;
         this.objectList = objectList;
-        this.checkedList = checkedList;
+        this.checkedList = new ArrayList<>();
     }
 
 

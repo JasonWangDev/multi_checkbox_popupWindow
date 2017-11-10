@@ -9,12 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
+import android.widget.ViewSwitcher;
 
 /**
  * Created by jason on 2017/11/9.
  */
 
 public class MultiCheckBoxPopupWindow extends PopupWindow {
+
+    private static final int COL_COUNT = 2;
 
     private static final int LAYOUT_ID = R.layout.popupwindow_multi_checkbox;
 
@@ -23,6 +26,7 @@ public class MultiCheckBoxPopupWindow extends PopupWindow {
     private static final int WIDTH = ViewGroup.LayoutParams.MATCH_PARENT;
     private static final int HEIGHT = ViewGroup.LayoutParams.MATCH_PARENT;
 
+    private ViewSwitcher viewSwitcher;
     private RecyclerView recyclerView;
 
 
@@ -32,9 +36,11 @@ public class MultiCheckBoxPopupWindow extends PopupWindow {
         LayoutInflater inflater = LayoutInflater.from(context);
         View popupWindowView = inflater.inflate(LAYOUT_ID,null);
 
+        viewSwitcher = popupWindowView.findViewById(R.id.view_switcher);
+
         recyclerView = popupWindowView.findViewById(R.id.recycler_view);
 
-        GridLayoutManager layoutManager = new GridLayoutManager(context, 2);
+        GridLayoutManager layoutManager = new GridLayoutManager(context, COL_COUNT);
         recyclerView.setLayoutManager(layoutManager);
 
         recyclerView.setAdapter(adapter);
@@ -50,6 +56,11 @@ public class MultiCheckBoxPopupWindow extends PopupWindow {
 
         setFocusable(true);
         setOutsideTouchable(true);
+    }
+
+
+    public void setDateLoaded() {
+        viewSwitcher.setDisplayedChild(1);
     }
 
 }

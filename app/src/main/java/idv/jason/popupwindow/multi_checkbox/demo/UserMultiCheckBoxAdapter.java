@@ -10,8 +10,8 @@ import idv.jason.popupwindow.multi_checkbox.MultiCheckBoxAdapter;
 
 public class UserMultiCheckBoxAdapter extends MultiCheckBoxAdapter<User> {
 
-    public UserMultiCheckBoxAdapter(boolean isAllRowSingle, List<User> objectList, List<User> checkedList) {
-        super(isAllRowSingle, objectList, checkedList);
+    public UserMultiCheckBoxAdapter(boolean isAllRowSingle, List<User> objectList) {
+        super(isAllRowSingle, objectList);
     }
 
 

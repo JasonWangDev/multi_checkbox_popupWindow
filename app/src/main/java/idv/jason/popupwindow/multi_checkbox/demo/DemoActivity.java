@@ -1,7 +1,7 @@
 package idv.jason.popupwindow.multi_checkbox.demo;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.PopupWindow;
@@ -18,7 +18,10 @@ public class DemoActivity extends AppCompatActivity implements View.OnClickListe
     private Button btn;
     private TextView tv;
 
+
+    private List<User> userList;
     private MultiCheckBoxAdapter<User> adapter;
+    private MultiCheckBoxPopupWindow popupWindow;
 
 
     @Override
@@ -31,20 +34,53 @@ public class DemoActivity extends AppCompatActivity implements View.OnClickListe
 
         btn.setOnClickListener(this);
 
-        List<User> userList = new ArrayList<>();
-        for (int i = 0 ; i < 10 ; i++)
-            userList.add(new User("Name " + i));
-
-        adapter = new UserMultiCheckBoxAdapter(true, userList, new ArrayList<User>());
+        userList = new ArrayList<>();
+        adapter = new UserMultiCheckBoxAdapter(true, userList);
     }
 
 
     @Override
     public void onClick(View view) {
-        MultiCheckBoxPopupWindow popupWindow = new MultiCheckBoxPopupWindow(this, adapter);
-        popupWindow.showAsDropDown(view);
+        if (null == popupWindow)
+        {
+            popupWindow = new MultiCheckBoxPopupWindow(this, adapter);
+            popupWindow.setOnDismissListener(this);
+        }
 
-        popupWindow.setOnDismissListener(this);
+        if (!popupWindow.isShowing())
+        {
+            popupWindow.showAsDropDown(view);
+
+            if (userList.size() <= 0)
+            {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try
+                        {
+                            Thread.sleep(3000);
+                        }
+                        catch (InterruptedException e)
+                        {
+                            e.printStackTrace();
+                        }
+
+                        DemoActivity.this.getWindow().getDecorView().post(new Runnable() {
+                            @Override
+                            public void run() {
+                                List<User> data = getData();
+                                userList.addAll(data);
+
+                                adapter.notifyItemRangeInserted(0, data.size());
+
+                                if (null != popupWindow)
+                                    popupWindow.setDateLoaded();
+                            }
+                        });
+                    }
+                }).start();
+            }
+        }
     }
 
 
@@ -56,6 +92,16 @@ public class DemoActivity extends AppCompatActivity implements View.OnClickListe
             str += u.getName() + '\n';
 
         tv.setText(str);
+    }
+
+
+    private List<User> getData() {
+        List<User> userList = new ArrayList<>();
+        for (int i = 0 ; i < 10 ; i++)
+            userList.add(new User("Name " + i));
+        userList.add(0, new User("全選"));
+
+        return userList;
     }
 
 }
