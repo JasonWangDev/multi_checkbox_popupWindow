@@ -21,6 +21,7 @@ public abstract class MultiCheckBoxAdapter<T> extends RecyclerView.Adapter<Multi
     //************************************** 抽象方法宣告 ****************************************//
 
     protected abstract String getItemName(T obj);
+    protected abstract int getItemViewBackgroundResource(int position);
 
 
     //***************************************** 變數宣告 *****************************************//
@@ -62,6 +63,8 @@ public abstract class MultiCheckBoxAdapter<T> extends RecyclerView.Adapter<Multi
     @Override
     public void onBindViewHolder(MultiCheckBoxAdapter.ViewHolder holder, int position) {
         onBind = true;
+
+        holder.itemView.setBackgroundResource(getItemViewBackgroundResource(position));
 
         int index = getIndexByPosition(position);
         if (NONE_ITEM_INDEX != index)

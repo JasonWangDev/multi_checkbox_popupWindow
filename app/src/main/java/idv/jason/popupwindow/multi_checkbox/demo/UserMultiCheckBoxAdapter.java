@@ -20,4 +20,9 @@ public class UserMultiCheckBoxAdapter extends MultiCheckBoxAdapter<User> {
         return obj.getName();
     }
 
+    @Override
+    protected int getItemViewBackgroundResource(int position) {
+        return R.color.colorPrimary;
+    }
+
 }
